@@ -34,8 +34,9 @@
 
 - (IBAction)alertButtonTapped:(id)sender
 {
-    self.alertViewTitleLabel.hidden = YES;
-    self.alertViewButtonLabel.hidden = YES;
+    // this is a simple informational alertview.  The delegate is not set so no delegate methods are triggered.  As a result there is no need for a tag
+    self.alertViewTitleLabel.hidden = NO;
+    self.alertViewButtonLabel.hidden = NO;
     self.actionSheetButtonLabel.hidden = YES;
     self.actionSheetTitleLabel.hidden = YES;
     self.actionSheetTagLabel.hidden = YES;
@@ -47,6 +48,10 @@
                                                      otherButtonTitles:nil];
     defaultAlertView.alertViewStyle = UIAlertViewStyleDefault;
     [defaultAlertView show];
+    
+    self.alertViewButtonLabel.text = @"no button index";
+    self.alertViewTitleLabel.text = defaultAlertView.title;
+    
 }
 
 
@@ -66,8 +71,6 @@
     plainTextAlertView.tag = 1;
     plainTextAlertView.alertViewStyle = UIAlertViewStylePlainTextInput;
     [plainTextAlertView show];
-    
-  
 }
 
 
@@ -129,6 +132,7 @@
     actionSheet.actionSheetStyle = UIActionSheetStyleBlackOpaque;
     actionSheet.tag = 0;
     [actionSheet showInView:self.view];
+    self.actionSheetTitleLabel.text = actionSheet.title;
 }
 
 
@@ -156,6 +160,7 @@
     actionSheet.actionSheetStyle = UIActionSheetStyleAutomatic;
     actionSheet.tag = 1;
     [actionSheet showInView:self.view];
+    self.actionSheetTitleLabel.text = actionSheet.title;
 }
 
 
@@ -173,12 +178,11 @@
      Action sheets are about giving the user choices so there will always be at least two buttons.  This means that this delegate method will always need to be used to identify the tapped button.
      */
     NSString *buttonTitle = [actionSheet buttonTitleAtIndex:buttonIndex];
-    self.actionSheetTitleLabel.text = buttonTitle;
     self.actionSheetTagLabel.text = [NSString stringWithFormat:@"%d",actionSheet.tag];
     switch (actionSheet.tag)
     {
         case 0:
-            if ([buttonTitle isEqualToString:@"Destructive Button"])
+            if ([buttonTitle isEqualToString:@"About to do something destructive"])
             {
                 self.actionSheetButtonLabel.text = @"destructive button tapped";
             }
@@ -200,7 +204,7 @@
             }
             break;
         case 1:
-            if ([buttonTitle isEqualToString:@"Destructive Button"])
+            if ([buttonTitle isEqualToString:@"About to do something destructive"])
             {
                 self.actionSheetButtonLabel.text = @"destructive button tapped";
             }
@@ -220,7 +224,6 @@
         default:
             break;
     }
-    
 }
 
 
